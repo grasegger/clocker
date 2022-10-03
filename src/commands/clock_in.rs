@@ -1,20 +1,13 @@
 use chrono::{DateTime, Local, NaiveDateTime};
 use diesel::prelude::*;
 
-use crate::model::entry::NewEntry;
+use crate::model::entry::{self, NewEntry};
 
 pub fn execute(when: &Option<NaiveDateTime>, connection: &mut SqliteConnection) {
-    use crate::schema::entries::dsl::*;
-
-    let existing = entries
-        .filter(clock_out.is_null())
-        .select(clock_in)
-        .first::<NaiveDateTime>(connection);
-
-    match existing {
+    match entry::running(connection) {
         Ok(result) => {
             println!("There is already a clock running, started on {}", result)
-        },
+        }
         Err(_) => create(when, connection),
     };
 }

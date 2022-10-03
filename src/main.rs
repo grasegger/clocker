@@ -1,6 +1,6 @@
 use clap::Parser;
 use cli::{Cli, Commands};
-use commands::clock_in;
+use commands::{clock_in, clock_out};
 
 mod cli;
 mod commands;
@@ -14,7 +14,7 @@ fn main() {
 
     match &cli.command {
         Commands::In { when } => clock_in::execute(when, &mut connection),
-        Commands::Out { when } => todo!(),
+        Commands::Out { when } => clock_out::execute(when, &mut connection),
         Commands::Balance => todo!(),
         Commands::Csv => todo!(),
         Commands::SetTime {
