@@ -22,7 +22,6 @@ fn main() {
         } => set_hours::execute(from, *hours_per_week, &mut connection),
         Commands::Block {
             from,
-            until,
             hours,
             reason,
         } => todo!(),

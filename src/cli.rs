@@ -25,7 +25,6 @@ pub enum Commands {
     Block {
         from: NaiveDate,
         hours: u8,
-        reason: String,
-        until: Option<NaiveDate>,
+        reason: String
     },
 }
