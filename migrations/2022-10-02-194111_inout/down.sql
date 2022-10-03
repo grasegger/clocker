@@ -1,1 +1,0 @@
-DROP TABLE in_out;
