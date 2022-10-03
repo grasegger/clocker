@@ -1,11 +1,11 @@
 use chrono::{DateTime, Local, NaiveDateTime};
 use diesel::prelude::*;
 
-use crate::model::entry::{self, NewEntry};
+use crate::model::entry;
 
 pub fn execute(when: &Option<NaiveDateTime>, connection: &mut SqliteConnection) {
     match entry::running(connection) {
-        Ok(result) => stop(when, connection),
+        Ok(_result) => stop(when, connection),
         Err(_) => println!("There is no active session, so I can't clock you out."),
     };
 }
