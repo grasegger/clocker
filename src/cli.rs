@@ -18,7 +18,7 @@ pub enum Commands {
     },
     Balance,
     Csv,
-    SetTime {
+    SetHours {
         from: NaiveDate,
         hours_per_week: u8,
     },
