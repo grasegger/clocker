@@ -1,3 +1,4 @@
+pub mod balance;
 pub mod block;
 pub mod clock_in;
 pub mod clock_out;

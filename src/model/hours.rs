@@ -27,3 +27,21 @@ pub fn existing(
         .select(id)
         .first::<i32>(connection)
 }
+
+pub fn get_oldest_date(connection: &mut SqliteConnection) -> NaiveDateTime {
+    use crate::schema::hours::dsl::*;
+
+    let mut oldest = Local::now().naive_local();
+
+    let all = hours
+        .load::<Hours>(connection)
+        .expect("Unable to load hours from database");
+
+    for hour in all {
+        if oldest > hour.beginning_with {
+            oldest = hour.beginning_with;
+        }
+    }
+
+    oldest
+}
