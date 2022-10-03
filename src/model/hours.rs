@@ -7,14 +7,14 @@ use diesel::prelude::*;
 pub struct Hours {
     pub id: i32,
     pub beginning_with: NaiveDateTime,
-    pub hours_per_week: u8,
+    pub hours_per_week: f32,
 }
 
 #[derive(Insertable)]
 #[diesel(table_name = hours)]
 pub struct NewHours<'a> {
     pub beginning_with: &'a NaiveDateTime,
-    pub hours_per_week: &'a i32,
+    pub hours_per_week: &'a f32,
 }
 
 pub fn existing(

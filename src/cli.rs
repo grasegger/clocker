@@ -20,11 +20,11 @@ pub enum Commands {
     Csv,
     SetHours {
         from: NaiveDate,
-        hours_per_week: u8,
+        hours_per_week: f32,
     },
     Block {
         from: NaiveDate,
-        hours: u8,
-        reason: String
+        hours: f32,
+        reason: String,
     },
 }

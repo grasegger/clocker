@@ -5,7 +5,7 @@ diesel::table! {
         id -> Integer,
         date -> Timestamp,
         reason -> Text,
-        hours -> Integer,
+        hours -> Float,
     }
 }
 
@@ -21,7 +21,7 @@ diesel::table! {
     hours (id) {
         id -> Integer,
         beginning_with -> Timestamp,
-        hours_per_week -> Integer,
+        hours_per_week -> Float,
     }
 }
 

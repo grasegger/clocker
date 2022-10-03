@@ -1,12 +1,13 @@
 use clap::Parser;
 use cli::{Cli, Commands};
-use commands::{clock_in, clock_out, set_hours};
+use commands::{block, clock_in, clock_out, set_hours};
 
 mod cli;
 mod commands;
 mod db;
 mod model;
 mod schema;
+
 fn main() {
     let cli = Cli::parse();
     let mut connection = db::establish_connection();
@@ -24,6 +25,6 @@ fn main() {
             from,
             hours,
             reason,
-        } => todo!(),
+        } => block::execute(from, *hours, reason, &mut connection),
     }
 }
