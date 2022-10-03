@@ -10,9 +10,22 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    In { when: Option<NaiveDateTime> },
-    Out { when: Option<NaiveDateTime> },
+    In {
+        when: Option<NaiveDateTime>,
+    },
+    Out {
+        when: Option<NaiveDateTime>,
+    },
     Balance,
     Csv,
-    SetTime { from: NaiveDate, hours_per_week: u8 },
+    SetTime {
+        from: NaiveDate,
+        hours_per_week: u8,
+    },
+    Block {
+        from: NaiveDate,
+        hours: u8,
+        reason: String,
+        until: Option<NaiveDate>,
+    },
 }
