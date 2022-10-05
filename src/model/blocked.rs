@@ -31,7 +31,7 @@ pub fn existing(
         .first::<i32>(connection)
 }
 
-pub fn getSumFor(
+pub fn get_sum_for(
     oldest_date: &NaiveDateTime,
     now: &NaiveDateTime,
     connection: &mut SqliteConnection,
@@ -40,7 +40,6 @@ pub fn getSumFor(
 
     let to_sum = blocked
         .filter(date.ge(oldest_date))
-        .filter(date.le(now))
         .load::<Blocked>(connection);
 
     let mut sum = 0.0;

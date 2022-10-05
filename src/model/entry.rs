@@ -33,7 +33,7 @@ pub fn current(connection: &mut SqliteConnection) -> Result<i32, diesel::result:
         .first::<i32>(connection)
 }
 
-pub fn getSumFor(
+pub fn get_sum_for(
     oldest_date: &NaiveDateTime,
     now: &NaiveDateTime,
     connection: &mut SqliteConnection,
@@ -42,25 +42,20 @@ pub fn getSumFor(
 
     let to_sum = entries
         .filter(clock_in.ge(oldest_date))
-        .filter(clock_out.le(now))
         .load::<Entry>(connection);
 
     let mut sum = 0.0;
 
     for mut entry_vec in to_sum {
         let entry = entry_vec.pop().unwrap();
-        match entry.clock_out {
-            Some(out) => {
-                let duration: Duration = out - entry.clock_in;
-                sum += duration.num_hours() as f32;
-                sum += duration.num_minutes() as f32 / 60.0;
-            }
-            None => {
-                let duration: Duration = *now - entry.clock_in;
-                sum += duration.num_hours() as f32;
-                sum += duration.num_minutes() as f32 / 60.0;
-            }
-        }
+        let duration: Duration = if let Some(out) = entry.clock_out {
+            out - entry.clock_in
+        } else {
+            *now - entry.clock_in
+        };
+        sum += duration.num_hours() as f32;
+        sum += duration.num_minutes() as f32 / 60.0;
+        sum += duration.num_seconds() as f32 / 60.0 / 60.0;
     }
 
     sum
