@@ -10,13 +10,12 @@ mod schema;
 
 fn main() {
     let cli = Cli::parse();
-    let mut connection = db::establish_connection();
+    let mut connection = db::establish_connection(None);
 
     match &cli.command {
         Commands::In { when } => clock_in::execute(when, &mut connection),
         Commands::Out { when } => clock_out::execute(when, &mut connection),
         Commands::Balance => balance::execute(&mut connection),
-        Commands::Csv => todo!(),
         Commands::SetHours {
             from,
             hours_per_week,

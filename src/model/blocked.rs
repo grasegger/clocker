@@ -1,5 +1,5 @@
 use crate::schema::*;
-use chrono::prelude::*;
+use chrono::{prelude::*, Duration};
 use diesel::prelude::*;
 
 #[derive(Queryable)]
@@ -37,17 +37,13 @@ pub fn get_sum_for(
     connection: &mut SqliteConnection,
 ) -> f32 {
     use crate::schema::blocked::dsl::*;
+    let tomorrow = now.clone() + Duration::days(1);
 
     let to_sum = blocked
         .filter(date.ge(oldest_date))
-        .load::<Blocked>(connection);
+        .filter(date.lt(tomorrow))
+        .load::<Blocked>(connection)
+        .unwrap();
 
-    let mut sum = 0.0;
-
-    for mut entry_vec in to_sum {
-        let entry = entry_vec.pop().unwrap();
-        sum += entry.hours;
-    }
-
-    sum
+    to_sum.iter().fold(0.0, |sum, value| sum + value.hours)
 }

@@ -25,8 +25,4 @@ diesel::table! {
     }
 }
 
-diesel::allow_tables_to_appear_in_same_query!(
-    blocked,
-    entries,
-    hours,
-);
+diesel::allow_tables_to_appear_in_same_query!(blocked, entries, hours,);

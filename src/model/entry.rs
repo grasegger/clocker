@@ -37,26 +37,20 @@ pub fn get_sum_for(
     oldest_date: &NaiveDateTime,
     now: &NaiveDateTime,
     connection: &mut SqliteConnection,
-) -> f32 {
+) -> f64 {
     use crate::schema::entries::dsl::*;
 
     let to_sum = entries
         .filter(clock_in.ge(oldest_date))
-        .load::<Entry>(connection);
+        .load::<Entry>(connection)
+        .unwrap();
 
-    let mut sum = 0.0;
-
-    for mut entry_vec in to_sum {
-        let entry = entry_vec.pop().unwrap();
-        let duration: Duration = if let Some(out) = entry.clock_out {
-            out - entry.clock_in
+    to_sum.iter().fold(0.0, |sum, value| {
+        let duration: Duration = if let Some(out) = value.clock_out {
+            out - value.clock_in
         } else {
-            *now - entry.clock_in
+            *now - value.clock_in
         };
-        sum += duration.num_hours() as f32;
-        sum += duration.num_minutes() as f32 / 60.0;
-        sum += duration.num_seconds() as f32 / 60.0 / 60.0;
-    }
-
-    sum
+        sum + duration.num_hours() as f64 + ((duration.num_minutes() % 60) as f64 / 60.0)
+    })
 }

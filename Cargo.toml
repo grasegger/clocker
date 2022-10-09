@@ -12,6 +12,8 @@ diesel = {version = "2.0.0", features= ["sqlite", "chrono"]}
 dotenvy = "0.15"
 clap = { version = "4.0.8", features = ["derive", "env"] }
 diesel_migrations = { version = "2.0.0", features = ["sqlite"] }
+rand = "0.8"
+fancy = "0.3.1"
 
 [profile.release]
 lto = true
