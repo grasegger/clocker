@@ -1,0 +1,14 @@
+drop table hours;
+
+create table hours (
+    id INTEGER PRIMARY KEY NOT NULL,
+    start_date DATETIME NOT NULL,
+    stop_date DATETIME NOT NULL,
+    mon FLOAT NOT NULL DEFAULT 0,
+    tue FLOAT NOT NULL DEFAULT 0,
+    wed FLOAT NOT NULL DEFAULT 0,
+    thu FLOAT NOT NULL DEFAULT 0,
+    fri FLOAT NOT NULL DEFAULT 0,
+    sat FLOAT NOT NULL DEFAULT 0,
+    sun FLOAT NOT NULL DEFAULT 0
+);

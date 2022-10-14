@@ -25,9 +25,23 @@ pub enum Commands {
     #[clap(about = "Set your working hours peer week starting from date.")]
     SetHours {
         #[clap(help = "Date formated as 'YYYY-MM-DD'")]
-        from: NaiveDate,
-        #[clap(help = "Hours per week, either as integer or float.")]
-        hours_per_week: f32,
+        start: NaiveDate,
+        #[clap(help = "Date formated as 'YYYY-MM-DD'")]
+        stop: NaiveDate,
+        #[clap(help = "Hours monday, either as integer or float.")]
+        monday: f32,
+        #[clap(help = "Hours tuesday, either as integer or float.")]
+        tuesday: f32,
+        #[clap(help = "Hours wednesday, either as integer or float.")]
+        wednesday: f32,
+        #[clap(help = "Hours thursday, either as integer or float.")]
+        thursday: f32,
+        #[clap(help = "Hours friday, either as integer or float.")]
+        friday: f32,
+        #[clap(help = "Hours saturday, either as integer or float.")]
+        saturday: f32,
+        #[clap(help = "Hours sunday, either as integer or float.")]
+        sunday: f32,
     },
     #[clap(about = "Block hours for holiday, vacation and sick leave.")]
     Block {

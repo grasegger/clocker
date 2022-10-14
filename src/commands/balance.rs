@@ -1,6 +1,6 @@
 use chrono::{Local, NaiveDateTime};
-use fancy::printcoln;
 use diesel::SqliteConnection;
+use fancy::printcoln;
 
 use crate::model::{
     blocked, entry,
@@ -73,7 +73,19 @@ mod tests {
         let first_afternoon = NaiveDateTime::new(first_day, lunch_end);
         let first_end = NaiveDateTime::new(first_day, end);
 
-        crate::set_hours::execute(&oldest_day, 36.0, &mut connection);
+        let future = oldest_day.clone() + Duration::days(14);
+        crate::set_hours::execute(
+            &oldest_day,
+            &future,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            4.0,
+            0.0,
+            0.0,
+            &mut connection,
+        );
         crate::clock_in::execute(&Some(first_start), &mut connection);
         crate::clock_out::execute(&Some(first_lunch), &mut connection);
 
@@ -95,6 +107,6 @@ mod tests {
 
         final_dt += Duration::days(5);
         let target = crate::model::hours::get_target(&mut connection, &oldest, &final_dt);
-        assert_eq!(72.0, target);
+        assert_eq!(68.0, target);
     }
 }

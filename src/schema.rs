@@ -20,8 +20,15 @@ diesel::table! {
 diesel::table! {
     hours (id) {
         id -> Integer,
-        beginning_with -> Timestamp,
-        hours_per_week -> Float,
+        start_date -> Timestamp,
+        stop_date -> Timestamp,
+        mon -> Float,
+        tue -> Float,
+        wed -> Float,
+        thu -> Float,
+        fri -> Float,
+        sat -> Float,
+        sun -> Float,
     }
 }
 
